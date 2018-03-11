@@ -68,38 +68,58 @@
      * @returns {{x: number, y: number, z: number}}
      */
     function equation(arr1 , arr2 , arr3){
-        var a1 = +arr1[0];
-        var b1 = +arr1[1];
-        var c1 = +arr1[2];
-        var d1 = +arr1[3];
+        // var a1 = +arr1[0];
+        // var b1 = +arr1[1];
+        // var c1 = +arr1[2];
+        // var d1 = +arr1[3];
 
-        var a2 = +arr2[0];
-        var b2 = +arr2[1];
-        var c2 = +arr2[2];
-        var d2 = +arr2[3];
+        // var a2 = +arr2[0];
+        // var b2 = +arr2[1];
+        // var c2 = +arr2[2];
+        // var d2 = +arr2[3];
 
-        var a3 = +arr3[0];
-        var b3 = +arr3[1];
-        var c3 = +arr3[2];
-        var d3 = +arr3[3];
+        // var a3 = +arr3[0];
+        // var b3 = +arr3[1];
+        // var c3 = +arr3[2];
+        // var d3 = +arr3[3];
 
-        //分离计算单元
-        var m1 = c1 - (b1 * c2 / b2);
-        var m2 = c2 - (b2 * c3 / b3);
-        var m3 = d2 - (b2 * d3 / b3);
-        var m4 = a2 - (b2 * a3 / b3);
-        var m5 = d1 - (b1 * d2 / b2);
-        var m6 = a1 - (b1 * a2 / b2);
+        // //分离计算单元
+        // var m1 = c1 - (b1 * c2 / b2);
+        // var m2 = c2 - (b2 * c3 / b3);
+        // var m3 = d2 - (b2 * d3 / b3);
+        // var m4 = a2 - (b2 * a3 / b3);
+        // var m5 = d1 - (b1 * d2 / b2);
+        // var m6 = a1 - (b1 * a2 / b2);
 
-        //计算xyz
-        var x = ((m1 / m2) * m3 - m5)/((m1 / m2) * m4 - m6);
-        var z = (m3 - m4 * x) / m2;
-        var y = (d1 - a1 * x - c1 * z) / b1;
+        // //计算xyz
+        // var x = ((m1 / m2) * m3 - m5)/((m1 / m2) * m4 - m6);
+        // var z = (m3 - m4 * x) / m2;
+        // var y = (d1 - a1 * x - c1 * z) / b1;
+
+        var a = arr1[0];
+        var b = arr1[1];
+        var c = arr1[2];
+        var d = arr1[3];
+
+        var e = arr2[0];
+        var f = arr2[1];
+        var g = arr2[2];
+        var h = arr2[3];
+
+        var i = arr3[0];
+        var j = arr3[1];
+        var k = arr3[2];
+        var l = arr3[3];
+
+        var D = a*f*k+b*g*i+c*e*j-c*f*i-a*g*j-b*e*k;
+        var X = d*f*k+b*g*l+c*h*j-c*f*l-d*g*j-b*h*k;
+        var Y = a*h*k+d*g*i+c*e*l-c*h*i-d*e*k-a*g*l;
+        var Z = a*f*l+b*h*i+d*j*e-d*f*i-b*e*l-a*h*j; 
 
         return {
-            x : x,
-            y : y,
-            z : z
+            x : X/D,
+            y : Y/D,
+            z : Z/D
         }
     }
 

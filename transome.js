@@ -1,3 +1,5 @@
+// import { create } from "domain";
+
 !function() {
     "use strict";
     var video = document.createElement("VIDEO");
@@ -8,7 +10,7 @@
     var videoContainer = new createjs.Container();
     var videoImg = new createjs.Bitmap(video);
     var disX = 0, disY = 0;
-    var idots = [], dots = [], dotscopy = [], count = 20;    
+    var idots = [], dots = [], dotscopy = [], count = 4;    
 
     // stage.autoClear = false;
     createjs.Ticker.setFPS(35);
@@ -31,7 +33,7 @@
     var layerImg = new createjs.Bitmap("./00000.png");
 
     layerImg.image.onload = function() {
-        layerContainer.addChild(layerImg);
+        // layerContainer.addChild(layerImg);
         layerContainer.addChild(transformContainer);
         var image_w = layerImg.image.width,
             image_h = layerImg.image.height;
@@ -111,19 +113,45 @@
 
             if (dot2 && dot3 && i % (count + 1) < count) {
                 //绘制三角形的下半部分
-                // renderImage(idot3, dot3, idot2, dot2, idot4, dot4);
+                renderImage(idot3, dot3, idot2, dot2, idot4, dot4, transformContainer);
 
                 //绘制三角形的上半部分
-                // renderImage(idot1, dot1, idot2, dot2, idot4, dot4);
+                renderImage(idot1, dot1, idot2, dot2, idot4, dot4, transformContainer);
             }
-            var shapeCircle = new createjs.Shape();
-            shapeCircle.graphics.beginFill("#ff0000").drawCircle(dot.x, dot.y, 1);
-            transformContainer.addChild(shapeCircle);
+            //红点
+            // var shapeCircle = new createjs.Shape();
+            // shapeCircle.graphics.beginFill("#ff0000").drawCircle(dot.x, dot.y, 1);
+            // transformContainer.addChild(shapeCircle);
         });
     }
 
-    function renderImage(idot1, dot1, idot2, dot2, idot3, dot3) {
+    function renderImage(idot1, dot1, idot2, dot2, idot3, dot3, transformContainer) {
+        // var img = new Image();
+        // img.onload = function(){
+            cx2.save();
+            cx2.beginPath();
+            cx2.moveTo(dot1.x, dot1.y)
+            cx2.lineTo(dot2.x, dot2.y)
+            cx2.lineTo(dot3.x, dot3.y)
+            cx2.closePath();;
+            cx2.clip();
+
+
+            var img = layerImg.clone();
+            var result = matrix.getMatrix.apply(this , [idot1, dot1, idot2, dot2, idot3, dot3]);
+            var transformM = new createjs.Matrix2D(result.a, result.b, result.c, result.d, result.e, result.f);
+            img.transformMatrix = transformM;
+            transformContainer.addChild(img);
+            
+
+        //     cx2.transform(result.a , result.b , result.c , result.d , result.e , result.f);
+        //     //绘制图片
+        //     cx2.drawImage(img , idots[0].x , idots[0].y , img.width , img.height);
+            cx2.restore();
         
+        // }
+        // img.src="./00000.png";
+
     }
 
     function rectsplit(n, a, b, c, d) {
